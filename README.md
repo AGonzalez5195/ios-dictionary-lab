@@ -87,7 +87,7 @@ Using the dictionary created in the previous problem, do the following:
 
 - Add an additional author named “Erik Larson” with an assigned score of 9.2.
 
-- Write an if/else statement that compares the score of John Krakaur with Mark Twain. Print out the name of the author with the highest score.
+- Write an if/else statement that compares the score of John Krakaur with Mark Twain. Print out the name of the author with the highest score..
 
 - Use a for-loop to iterate through the dictionary you created at the beginning of the problem, and print out the content in the form of key: value, one entry per line.
 
