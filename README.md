@@ -1,16 +1,23 @@
 # Dictionaries lab
 
-Fork and clone this repo. On your fork, answer and commit the follow questions. When you are finished, submit the link to your repo on Canvas.
-
 
 ## Question 1
 
 - Create an instance of a dictionary called `citiesDict` that maps 3 countries to their capital cities.
 
+`var citiesDict: [String:String] = ["Colombia":"Bogota","France":"Paris", "Peru":"Lima"]`
+
 - Add two more countries to your dictionary.
-
+```
+citiesDict["Ecuador"] = "Quito"
+citiesDict["Japan"] = "Tokyo"
+```
 - Translate at least 3 of the capital names into another language.
-
+```
+citiesDict["Japan"] = "Tokio"
+citiesDict["Colombia"] = "波哥大"
+citiesDict["France"] = "باريس" 
+```
 
 ## Question 2
 
@@ -27,7 +34,40 @@ Fork and clone this repo. On your fork, answer and commit the follow questions. 
 - Remove the new keys made in the previous two steps
 
 - Add 2 to every value inside of `someDict`.
+```
+// Step 1
+print(someDict["Three"]! + someDict["Five"]!)
 
+//Step 2
+someDict["Six"] = 18
+someDict["Seven"] = 420
+
+//Step 3
+var product = 1
+for  value in someDict.values {
+product *= value
+}
+someDict["productUpToSeven"] = product
+
+//Step 4
+var sum = 0
+
+
+for  (key,value) in someDict where key != "Seven" && key != "productUpToSeven" {
+sum += value
+}
+someDict["sumUpToSix"] = sum
+
+//Step 5
+someDict.removeValue(forKey: "productUpToSeven")
+someDict.removeValue(forKey: "productUpToSeven")
+
+//Step 6
+for (key,value) in someDict {
+someDict[key] = value + 2
+}
+print(someDict)
+```
 
 ## Question 3
 
@@ -51,6 +91,29 @@ Using the dictionary created in the previous problem, do the following:
 
 - Use a for-loop to iterate through the dictionary you created at the beginning of the problem, and print out the content in the form of key: value, one entry per line.
 
+```
+var A: [String:Double] = ["Mark Twain": 8.9, "Nathaniel Hawthorne": 5.1, "John Steinbeck": 2.3, "C.S. Lewis":9.9, "Jon Krakauer": 6.1]
+
+//Step 1
+
+print(A["John Steinbeck"]!)
+
+//Step 2
+
+A["Erik Larson"] = 9.2
+
+//Step 3
+if A["Jon Krakauer"]! > A["Mark Twain"]! {
+print("John Krakauer")
+} else {
+print("Mark Twain")
+}
+//Step 4
+for (key, value) in A {
+print(key, value)
+}
+
+```
 
 ## Question 4
 
@@ -91,7 +154,33 @@ var message = "hello world"
 
 You are also given an `encodedMessage` which contains only lowercase letters and spaces. Use the `code` dictionary to decode the message and print it.
 `var encodedMessage = "uijt nfttbhf jt ibse up sfbe"`
+```
+code[" "] = " "
+//Step 1
+var codedMessage = ""
 
+for chars in message {
+for (key, value) in code {
+if key.contains(chars) {
+codedMessage.append(value)
+}
+}
+}
+print(codedMessage)
+
+
+//Step 2
+var decodedMessage = ""
+
+for chars in encodedMessage {
+for (key, value) in code {
+if value.contains(chars) {
+decodedMessage.append(key)
+}
+}
+}
+print(decodedMessage)
+```
 
 ## Question 5
 
@@ -123,6 +212,48 @@ var people: [[String:String]] = [
 ```
 
 Now, create an array of strings called `fullNames` that contains the values for `“firstName”` and `“lastName”` from the dictionary separated by a space.
+
+```
+// Step 1
+
+var firstNames: [String] = []
+
+for element in people {
+for (key, value) in element {
+if key != "lastName" {
+firstNames.append(value)
+}
+}
+}
+print(firstNames)
+
+var lastNames: [String] = []
+
+for element in people {
+for (key, value) in element {
+if key != "firstName" {
+lastNames.append(value)
+}
+}
+}
+print(lastNames)
+
+//Step 2
+
+var fullNames: [String] = []
+var test: [String] = []
+for element in people {
+for (key, value) in element {
+test = Array(element.values)
+
+}
+}
+
+let zipped = zip(firstNames, lastNames)
+let result = zipped.map { $0.0 + " " + $0.1 }
+print(result)
+
+```
 
 
 ## Question 6
@@ -160,7 +291,30 @@ var peopleWithScores: [[String: String]] = [
 ```
 
 Print out the dictionary above in the following format:  **full name - score**
+```
+var bestScore = 0
+var fullName = ""
 
+
+for person in peopleWithScores {
+if let score = person["score"] {
+if let firstName = person["firstName"] {
+if let lastName = person["lastName"] {
+if let scoreInt = Int(score) {
+if scoreInt > bestScore {
+bestScore = scoreInt
+fullName = ""
+fullName.append(firstName)
+fullName.append(" ")
+fullName.append(lastName)
+}
+}
+}
+}
+}
+}
+print(fullName)
+```
 
 ## Question 7
 
@@ -169,7 +323,13 @@ Print out the dictionary above in the following format:  **full name - score**
 You are given an array of integers. The frequency of a number is the number of times it appears in the array. Find out the frequency of each one.
 
 Print the numbers in ascending order followed by their frequency.
-
+```
+var numbers = [1, 2, 3, 2, 3, 5, 2, 1, 3, 4, 2, 2, 2]
+let mappedItems = numbers.map { ($0, 1) }
+let counts = Dictionary(mappedItems, uniquingKeysWith: +)
+print(counts)
+```
+// (uniquingKeysWith:) merges the key-value pairs in the sequence into the dictionary and uses the combining closure (a + in this case) to determine what to do with any duplicate keys.
 
 ## Question 8
 
@@ -177,11 +337,42 @@ Print the most common letter in the string below:
 
 `var myString = "We're flooding people with information. We need to feed it through a processor. A human must turn information into intelligence or knowledge. We've tended to forget that no computer will ever ask a new question."`
 
+```
+let myString = "We're flooding people with information. We need to feed it through a processor. A human must turn information into intelligence or knowledge. We've tended to forget that no computer will ever ask a new question."
+var counters = [Character: Int]()
+
+for c in myString where c != " "{
+if let count = counters[c] {
+counters[c] = count + 1
+} else {
+counters[c] = 1
+}
+}
+
+let maxElement = counters.reduce(counters.first!) { $1.1 > $0.1 ? $1 : $0 }
+print(maxElement.0)
+
+```
 
 ## Question 9
 
 Write code that creates a dictionary where the keys are Ints between 0 and 20 inclusive, and each key's value is its cube.
+```
+var myDict = [Int: Int]()
 
+var range = 1...20
+
+for number in range {
+let cubedRange = 1...number
+var counter = number
+for num in cubedRange {
+counter = number * number * number
+}
+myDict[number] = counter
+}
+
+print(myDict)
+```
 
 ## Question 10
 
@@ -190,6 +381,16 @@ Write code that iterates through `testStates` and prints out whether or not that
 ```swift
 let statePop = ["Alabama": 4.8, "Alaska": 0.7, "Arizona": 6.7, "Arkansas": 3.0]
 let testStates = ["California","Arizona", "Alabama", "New Mexico"]
+```
+```
+let statePop = ["Alabama": 4.8, "Alaska": 0.7, "Arizona": 6.7, "Arkansas": 3.0]
+let testStates = ["California","Arizona", "Alabama", "New Mexico"]
+
+var states = Array(statePop.keys)
+
+let commonElements = states.filter(testStates.contains)
+
+print("\(commonElements) are keys in statePop")
 ```
 
 
